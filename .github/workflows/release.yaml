@@ -46,6 +46,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          PAT: ${{ secrets.PAT }}
         run: |
+          git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }}
           npx lerna version --conventional-commits --yes
           npx lerna publish from-package --yes --registry=https://registry.npmjs.org/
