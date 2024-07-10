@@ -1,0 +1,42 @@
+{
+  "name": "@hycord/rest",
+  "version": "0.0.1",
+  "description": "Custom fully typed REST module for @hycord's projects",
+  "private": false,
+  "module": "src/index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "bun build --target=node ./src/index.ts --outfile=dist/index.js && bun run build:declaration",
+    "build:declaration": "tsc --emitDeclarationOnly --project tsconfig.types.json",
+    "postbuild": "rimraf tsconfig.types.tsbuildinfo",
+    "publish": "npm publish --access=public"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "prettier": "^3.3.2",
+    "rimraf": "^6.0.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.5.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hycord/hycordia.git"
+  },
+  "keywords": [
+    "rest",
+    "discord"
+  ],
+  "author": {
+    "email": "admin@masen.dev",
+    "name": "Masen Toplak",
+    "url": "https://masen.dev"
+  },
+  "license": "MIT",
+  "files": [
+    "dist/*.js",
+    "dist/*.d.ts"
+  ]
+}

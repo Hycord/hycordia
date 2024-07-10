@@ -1,0 +1,40 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: 'latest'
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Check for release tag in commit message
+        id: check_tag
+        run: echo "::set-output name=should_release::$(git log -1 --pretty=%B | grep -c '[release]')"
+
+      - name: Lint conventional commits
+        if: steps.check_tag.outputs.should_release == '1'
+        run: npx commitlint --from=HEAD~1 --to=HEAD
+
+      - name: Create release
+        if: steps.check_tag.outputs.should_release == '1'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npx lerna version --conventional-commits --yes
+          npx lerna publish from-package --yes --registry=https://registry.npmjs.org/
