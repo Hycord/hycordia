@@ -10,6 +10,8 @@
   "version": "0.0.0",
   "private": true,
   "devDependencies": {
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
     "lerna": "^8.1.6",
     "standard-version": "^9.5.0"
   }

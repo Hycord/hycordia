@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Ensure full history is available
 
       - name: Set up Node.js
         uses: oven-sh/setup-bun@v1
@@ -26,8 +28,12 @@ jobs:
         id: check_tag
         run: echo "::set-output name=should_release::$(git log -1 --pretty=%B | grep -c '[release]')"
 
+      - name: Check for previous commits
+        id: check_prev_commits
+        run: echo "::set-output name=has_previous_commits::$(git rev-list --count HEAD~1)"
+
       - name: Lint conventional commits
-        if: steps.check_tag.outputs.should_release == '1'
+        if: steps.check_tag.outputs.should_release == '1' && steps.check_prev_commits.outputs.has_previous_commits == '1'
         run: npx commitlint --from=HEAD~1 --to=HEAD
 
       - name: Create release
