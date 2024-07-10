@@ -1,6 +1,6 @@
 {
   "name": "@hycord/rest",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Custom fully typed REST module for @hycord's projects",
   "private": false,
   "module": "src/index.ts",
