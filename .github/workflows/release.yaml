@@ -26,8 +26,8 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
+          git config --global user.name "hycord"
+          git config --global user.email "admin@masen.dev"
 
       - name: Check for release tag in commit message
         id: check_tag
